@@ -1,73 +1,63 @@
-# React + TypeScript + Vite
+# 🐉 Battle of Monsters
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web interativa onde você cria monstros com atributos (HP, ataque, defesa, velocidade), escolhe dois para a batalha e assiste à simulação turno a turno com animações. O vencedor é determinado por regras de combate baseadas nos stats.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Funcionalidades
 
-## React Compiler
+- **🦴 Criação de monstros** — Modal para cadastrar personagens com nome, HP, ataque, defesa, velocidade e URL de imagem.
+- **⚔️ Seleção para batalha** — Lista de monstros criados com seleção de atacante e defensor (clique para alternar).
+- **🎮 Simulação de batalha** — Combate turno a turno: ordem de ataque por velocidade (desempate por ataque), dano = ataque − defesa (mínimo 1), animação de golpe e barras de HP.
+- **📱 Interface responsiva** — Layout com Tailwind CSS e componentes acessíveis (Headless UI).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Stack e ferramentas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Tecnologia | Uso |
+|------------|-----|
+| **React 19** | UI e hooks |
+| **TypeScript** | Tipagem e contratos |
+| **Vite 7** | Build e dev server |
+| **Tailwind CSS 4** | Estilos |
+| **Headless UI** | Modal e componentes acessíveis |
+| **ESLint** | Linting |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🏗️ Arquitetura do projeto
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+O código está organizado para separar **regras de negócio** da **camada de UI**:
+
+```
+src/
+├── domain/           # Lógica pura (sem React)
+│   ├── monster/      # BattleMonster, mapeamento IMonster → BattleMonster
+│   └── battle/       # BattleSimulator — simulação completa da batalha
+├── types/            # Interfaces e tipos (monster, battle)
+├── constants/        # Constantes (battle, monster, monsterStats, estilos)
+├── hooks/            # useMonsters, useCharacterCreationModal, useBattleSelection, useBattleController, etc.
+├── components/       # UI por domínio (monster, battle, ui)
+└── App.tsx           # Composição e orquestração
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **📦 Domain**: `BattleSimulator` recebe dois `BattleMonster`, roda a batalha em memória e devolve um log de passos. Toda a fórmula de dano e ordem de turno fica aqui, testável sem React.
+- **🪝 Hooks**: encapsulam estado e efeitos (lista de monstros, seleção para batalha, controle da animação passo a passo).
+- **🧩 Components**: recebem dados e callbacks via props; a lógica fica nos hooks e no domain.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 Como rodar
+
+Requisitos: **Node.js** (recomendado 18+).
+
+```bash
+# Instalar dependências
+npm install
+
+# Desenvolvimento (com hot reload)
+npm run dev
 ```
+
+Após `npm run dev`, abra o endereço exibido no terminal (geralmente `http://localhost:5173`) 🌐

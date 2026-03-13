@@ -4,72 +4,114 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: #0f172a;
+  color: #e2e8f0;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+button,
+[role="button"] {
   cursor: pointer;
-  transition: border-color 0.25s;
 }
 
-button:hover {
-  border-color: #646cff;
+button:disabled,
+[role="button"][aria-disabled="true"] {
+  cursor: not-allowed;
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* BattleArena keyframes (usado com Tailwind animate-[...]) */
+@keyframes lunge-and-return-right {
+  0% {
+    transform: translateX(0);
   }
 
-  a:hover {
-    color: #747bff;
+  40%,
+  50% {
+    transform: translateX(80px);
   }
 
-  button {
-    background-color: #f9f9f9;
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes lunge-and-return-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  40%,
+  50% {
+    transform: translateX(-80px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes hit-reaction {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
+    transform: scale(1);
+    border-color: #475569;
+  }
+
+  15% {
+    box-shadow: 0 0 20px 4px rgba(239, 68, 68, 0.7);
+    transform: scale(1.08);
+    border-color: #ef4444;
+  }
+
+  30% {
+    transform: scale(0.96) translateX(4px);
+  }
+
+  45% {
+    transform: scale(1.02) translateX(-2px);
+  }
+
+  60% {
+    transform: scale(0.98) translateX(1px);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+    transform: scale(1);
+    border-color: #475569;
+  }
+}
+
+@keyframes damage-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+
+  25% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -70%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -120%) scale(1.1);
   }
 }
