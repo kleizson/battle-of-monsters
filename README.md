@@ -1,6 +1,6 @@
 # 🐉 Battle of Monsters
 
-Aplicação web interativa onde você cria monstros com atributos (HP, ataque, defesa, velocidade), escolhe dois para a batalha e assiste à simulação turno a turno com animações. O vencedor é determinado por regras de combate baseadas nos stats.
+Um jogo onde você cria seus monstros, escolhe dois para brigar e assiste à batalha turno a turno. Quem tiver os melhores stats leva a melhor!
 
 ---
 
